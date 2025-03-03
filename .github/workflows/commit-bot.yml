@@ -1,0 +1,24 @@
+name: Auto Commit Bot
+
+on:
+  schedule:
+    - cron: "0 12 * * *"  # Exécute chaque jour à midi UTC
+
+jobs:
+  commit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout du repo
+        uses: actions/checkout@v3
+
+      - name: Configurer Git
+        run: |
+          git config --global user.name "Bot Commit"
+          git config --global user.email "bot@example.com"
+
+      - name: Modifier un fichier et committer
+        run: |
+          echo "Commit automatique - $(date)" >> commit.txt
+          git add commit.txt
+          git commit -m "Commit automatique du $(date)"
+          git push
